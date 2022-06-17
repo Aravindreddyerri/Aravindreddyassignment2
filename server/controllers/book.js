@@ -17,26 +17,23 @@ module.exports.displayBookList = (req, res, next) => {
         {
             //console.log(BookList);
 
-            res.render('book/list', 
-            {title: 'Books', 
-            BookList: bookList, 
-            displayName: req.user ? req.user.displayName : ''});      
+            res.render('book/list', {title: 'Contact Details', BookList: bookList,displayName: req.user ? req.user.displayName : ''});      
         }
     });
 }
 
 module.exports.displayAddPage = (req, res, next) => {
-    res.render('book/add', {title: 'Add Book', 
-    displayName: req.user ? req.user.displayName : ''})          
+    res.render('book/add', {title: 'Add Details',displayName: req.user ? req.user.displayName : ''})          
 }
 
 module.exports.processAddPage = (req, res, next) => {
     let newBook = Book({
         "name": req.body.name,
-        "author": req.body.author,
-        "published": req.body.published,
-        "description": req.body.description,
-        "price": req.body.price
+        "username": req.body.username,
+        "email": req.body.email,
+        "number": req.body.number,
+        
+        
     });
 
     Book.create(newBook, (err, Book) =>{
@@ -66,8 +63,7 @@ module.exports.displayEditPage = (req, res, next) => {
         else
         {
             //show the edit view
-            res.render('book/edit', {title: 'Edit Book', book: bookToEdit, 
-            displayName: req.user ? req.user.displayName : ''})
+            res.render('book/edit', {title: 'Edit Details', book: bookToEdit,displayName: req.user ? req.user.displayName : ''})
         }
     });
 }
@@ -78,10 +74,10 @@ module.exports.processEditPage = (req, res, next) => {
     let updatedBook = Book({
         "_id": id,
         "name": req.body.name,
-        "author": req.body.author,
-        "published": req.body.published,
-        "description": req.body.description,
-        "price": req.body.price
+        "username": req.body.username,
+        "email": req.body.email,
+        "number": req.body.number,
+              
     });
 
     Book.updateOne({_id: id}, updatedBook, (err) => {
